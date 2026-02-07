@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Vision System Flow</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1419 100%);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 95%;
+            height: 95%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+        }
+
+        .header .tagline {
+            color: #94a3b8;
+            font-size: 1em;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .flow-container {
+            flex: 1;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .stage-wrapper {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stage-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .stage-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.8em;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .stage-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .modules-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .module-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .module-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.8);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .module-icon {
+            font-size: 2em;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.5);
+        }
+
+        .module-title {
+            font-size: 1.2em;
+            font-weight: 800;
+            color: #ffffff;
+            flex: 1;
+        }
+
+        .tech-highlight {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #000000;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.75em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 10px rgba(251, 191, 36, 0.5);
+            border: 2px solid #fbbf24;
+        }
+
+        .module-content {
+            flex: 1;
+        }
+
+        .module-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .module-content li {
+            color: #cbd5e1;
+            font-size: 0.85em;
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .module-content li::before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            color: #6366f1;
+            font-size: 1.2em;
+        }
+
+        .connector {
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 30px solid #6366f1;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.8));
+        }
+
+        .flow-label {
+            position: absolute;
+            bottom: -30px;
+            background: rgba(99, 102, 241, 0.2);
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(99, 102, 241, 0.5);
+            white-space: nowrap;
+        }
+
+        /* Color variations for different stages */
+        .stage-2 .module-card::before {
+            background: linear-gradient(90deg, #ec4899, #f43f5e, #fb923c);
+        }
+
+        .stage-2 .module-icon {
+            background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+        }
+
+        .stage-2 .module-card {
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+
+        .stage-2 .module-card:hover {
+            border-color: rgba(236, 72, 153, 0.8);
+            box-shadow: 0 10px 40px rgba(236, 72, 153, 0.4);
+        }
+
+        .stage-3 .module-card::before {
+            background: linear-gradient(90deg, #06b6d4, #0ea5e9, #3b82f6);
+        }
+
+        .stage-3 .module-icon {
+            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+        }
+
+        .stage-3 .module-card {
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .stage-3 .module-card:hover {
+            border-color: rgba(6, 182, 212, 0.8);
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.4);
+        }
+
+        .stage-4 .module-card::before {
+            background: linear-gradient(90deg, #10b981, #14b8a6, #06b6d4);
+        }
+
+        .stage-4 .module-icon {
+            background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+        }
+
+        .stage-4 .module-card {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .stage-4 .module-card:hover {
+            border-color: rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            width: 280px;
+            opacity: 0;
+            pointer-events: none;
+            margin-bottom: 10px;
+            border: 2px solid #6366f1;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            line-height: 1.6;
+        }
+
+        .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #6366f1;
+        }
+
+        .module-card:hover .tooltip {
+            opacity: 1;
+        }
+
+        .tooltip-title {
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 6px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ SAFE VISION SYSTEM</h1>
+            <p class="tagline">AI-Powered Multi-Modal School Safety Detection Pipeline</p>
+        </div>
+
+        <div class="flow-container">
+            <!-- STAGE 1: INPUT -->
+            <div class="stage-wrapper stage-1">
+                <div class="stage-header">
+                    <div class="stage-number">1</div>
+                    <div class="stage-title">Input Layer</div>
+                </div>
+                <div class="modules-container">
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Computer Vision Processing</div>
+                            YOLO26-Pose detects 17 body keypoints to track movements and identify aggressive behaviors like fighting, pushing, or threatening gestures in real-time video feeds.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">👁️</div>
+                            <div class="module-title">Vision Engine</div>
+                            <div class="tech-highlight">YOLO26</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Real-time pose estimation</li>
+                                <li>17 keypoint body tracking</li>
+                                <li>Aggressive gesture detection</li>
+                                <li>Multi-person tracking</li>
+                                <li>Movement pattern analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Audio Event Classification</div>
+                            YAMNet model classifies 521 different audio events including screaming, crying, gunshots, and other distress sounds from microphone inputs.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">🔊</div>
+                            <div class="module-title">Audio Engine</div>
+                            <div class="tech-highlight">YAMNet</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>521 audio class detection</li>
+                                <li>Screaming & crying recognition</li>
+                                <li>Gunshot identification</li>
+                                <li>Volume-based filtering</li>
+                                <li>Real-time audio processing</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Contextual AI Understanding</div>
+                            Google's Gemini AI provides multimodal reasoning to understand scene context, environmental factors, and behavioral patterns.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">🤖</div>
+                            <div class="module-title">Gemini AI</div>
+                            <div class="tech-highlight">Gemini</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Multimodal scene analysis</li>
+                                <li>Contextual understanding</li>
+                                <li>Behavioral interpretation</li>
+                                <li>Environmental assessment</li>
+                                <li>Natural language reasoning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONNECTOR 1 -->
+            <div class="connector">
+                <div class="arrow"></div>
+                <div class="flow-label">Raw Data</div>
+            </div>
+
+            <!-- STAGE 2: PROCESSING -->
+            <div class="stage-wrapper stage-2">
+                <div class="stage-header">
+                    <div class="stage-number">2</div>
+                    <div class="stage-title">Processing</div>
+                </div>
+                <div class="modules-container">
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Multi-Modal Data Fusion</div>
+                            Combines visual and audio signals with 5-second temporal buffering to cross-validate threats and eliminate false positives through correlation analysis.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">⚡</div>
+                            <div class="module-title">Fusion Logic</div>
+                            <div class="tech-highlight">Python</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Visual + Audio correlation</li>
+                                <li>5-second temporal buffering</li>
+                                <li>Cross-modal validation</li>
+                                <li>Confidence score calculation</li>
+                                <li>False positive filtering</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">AI Risk Assessment</div>
+                            Gemini Flash analyzes fused data to determine threat severity, generate incident descriptions, and recommend appropriate response actions.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">🧠</div>
+                            <div class="module-title">Gemini Analysis</div>
+                            <div class="tech-highlight">Gemini Flash</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Image + text multimodal input</li>
+                                <li>Risk level determination</li>
+                                <li>Incident description generation</li>
+                                <li>Action recommendation engine</li>
+                                <li>Contextual reasoning output</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Threat Priority System</div>
+                            Classifies incidents into 4 priority levels: CRITICAL (weapons), HIGH (fights), MEDIUM (bullying), LOW (suspicious) for appropriate staff response.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">⚠️</div>
+                            <div class="module-title">Risk Classification</div>
+                            <div class="tech-highlight">Algorithm</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>🔴 CRITICAL: Weapons detected</li>
+                                <li>🟠 HIGH: Physical altercations</li>
+                                <li>🟡 MEDIUM: Bullying incidents</li>
+                                <li>🟢 LOW: Suspicious behavior</li>
+                                <li>Priority queue management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONNECTOR 2 -->
+            <div class="connector">
+                <div class="arrow"></div>
+                <div class="flow-label">Analyzed</div>
+            </div>
+
+            <!-- STAGE 3: STORAGE -->
+            <div class="stage-wrapper stage-3">
+                <div class="stage-header">
+                    <div class="stage-number">3</div>
+                    <div class="stage-title">Storage</div>
+                </div>
+                <div class="modules-container">
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Cloud Database System</div>
+                            Google Cloud Firestore provides real-time NoSQL database with automatic synchronization across all connected devices and secure data storage.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">🔥</div>
+                            <div class="module-title">Firebase Backend</div>
+                            <div class="tech-highlight">Firestore</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Cloud Firestore NoSQL database</li>
+                                <li>Real-time data synchronization</li>
+                                <li>Automatic scaling infrastructure</li>
+                                <li>Secure authentication system</li>
+                                <li>Base64 image encoding storage</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Structured Alert Data</div>
+                            Each alert document contains timestamp, GPS coordinates, risk level, incident description, images, and resolution status for comprehensive tracking.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">📊</div>
+                            <div class="module-title">Alert Metadata</div>
+                            <div class="tech-highlight">JSON</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>ISO 8601 timestamp indexing</li>
+                                <li>GPS coordinate mapping</li>
+                                <li>Risk level categorization</li>
+                                <li>Image reference storage</li>
+                                <li>Resolution status tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Analytics & Compliance</div>
+                            30-day historical data retention enables trend analysis, pattern recognition, audit trails, and compliance reporting for school safety records.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">📈</div>
+                            <div class="module-title">Historical Data</div>
+                            <div class="tech-highlight">Analytics</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>30-day data retention policy</li>
+                                <li>Trend analysis aggregation</li>
+                                <li>Pattern recognition logs</li>
+                                <li>Compliance audit trails</li>
+                                <li>Performance metrics tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONNECTOR 3 -->
+            <div class="connector">
+                <div class="arrow"></div>
+                <div class="flow-label">Stored</div>
+            </div>
+
+            <!-- STAGE 4: INTERFACE -->
+            <div class="stage-wrapper stage-4">
+                <div class="stage-header">
+                    <div class="stage-number">4</div>
+                    <div class="stage-title">Interface</div>
+                </div>
+                <div class="modules-container">
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Cross-Platform Mobile App</div>
+                            Flutter framework delivers native iOS and Android applications with real-time push notifications and comprehensive alert management interface.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">📱</div>
+                            <div class="module-title">Flutter Application</div>
+                            <div class="tech-highlight">Flutter</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Cross-platform native apps</li>
+                                <li>Real-time push notifications</li>
+                                <li>Alert dashboard interface</li>
+                                <li>One-tap resolution actions</li>
+                                <li>Staff communication system</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">Interactive Campus Visualization</div>
+                            Custom-painted 2D floor plans with color-coded markers show real-time incident locations across multiple building floors with tap-to-view details.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">🗺️</div>
+                            <div class="module-title">Digital Twin Map</div>
+                            <div class="tech-highlight">CustomPaint</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>2D floor plan rendering</li>
+                                <li>Color-coded severity markers</li>
+                                <li>Pulsing active alert indicators</li>
+                                <li>Multi-floor navigation system</li>
+                                <li>Tap-to-view incident details</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="tooltip">
+                            <div class="tooltip-title">AI-Generated Intelligence</div>
+                            Gemini AI generates daily security summaries, identifies danger hotspots, predicts trends, and provides actionable prevention recommendations.
+                        </div>
+                        <div class="module-header">
+                            <div class="module-icon">💡</div>
+                            <div class="module-title">AI Insights</div>
+                            <div class="tech-highlight">Gemini Pro</div>
+                        </div>
+                        <div class="module-content">
+                            <ul>
+                                <li>Daily security summaries</li>
+                                <li>Trend prediction analysis</li>
+                                <li>Hotspot identification mapping</li>
+                                <li>Prevention recommendations</li>
+                                <li>Performance metrics dashboard</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
