@@ -289,7 +289,7 @@ Collections (deque) → Circular buffers for temporal analysis
 
 ### System Flow Diagram
 
-<img src="./assets/images/system-flow.png" alt="System Flow" width="100%" style="max-width: 1400px; height: auto; margin: 30px 0; border: 2px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+<img src="./safe_vision/assets/images/system-flow.png" alt="System Flow" width="100%" style="max-width: 1400px; height: auto; margin: 30px 0; border: 2px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
 </div>
 
