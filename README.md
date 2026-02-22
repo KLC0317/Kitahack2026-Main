@@ -62,9 +62,13 @@ Student safety in schools remains a critical challenge, with bullying, violence,
 #### Core Capabilities:
 
 ✅ Real-time violence and bullying detection
+
 ✅ Audio-based threat identification (screaming, crying, gunshots)
+
 ✅ AI-powered incident analysis and recommendations
+
 ✅ Automated alert system with Firebase integration
+
 ✅ Interactive digital twin visualization of school premises
 
 ---
@@ -316,8 +320,8 @@ Collections (deque) → Circular buffers for temporal analysis
 #### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/team-zestix/safe-vision.git
-cd safe-vision/backend
+git clone https://github.com/KLC0317/Kitahack2026-Main.git
+cd Kitahack2026-Main/backend
 ```
 
 #### Step 2: Install Dependencies
@@ -328,13 +332,12 @@ pip install google-generativeai firebase-admin
 pip install tensorflow tensorflow-hub pyaudio scipy
 ```
 
-#### Step 3: Configure API Keys
+#### Step 3: Configure API Keys and credientials for firebase
 
 ```python
-# config.py
 GEMINI_API_KEY = "your_gemini_api_key"
-FIREBASE_CREDENTIALS = "path/to/serviceAccountKey.json"
 ```
+Note: The serviceAccountKey.json keys are removed for security corncerns.
 
 #### Step 4: Run Detection System
 
@@ -349,7 +352,7 @@ python main.py
 #### Step 1: Navigate to App Directory
 
 ```bash
-cd safe-vision/mobile_app
+cd Kitahack2026-Main/frontend
 ```
 
 #### Step 2: Install Dependencies
@@ -731,7 +734,7 @@ FirebaseFirestore.instance
 <td width="33%" align="center">
 
 **⏱️ Response Time**
-Reduce incident response time by **70%**
+Reduce incident response time by **83%**
 
 </td>
 <td width="33%" align="center">
@@ -771,7 +774,6 @@ Improve staff situational awareness
 * 🌐 Multi-school network
 * 🏙️ Smart city integration
 * 🌍 Global technology transfer
-* 🥽 AR overlays for security staff
 
 ---
 
@@ -812,14 +814,14 @@ Improve staff situational awareness
 ### **Team Zestix**
 
 📧 **Email:** [kianlokchin0317@gmail.com](mailto:kianlokchin0317@gmail.com)
-💻 **GitHub:** [github.com/team-zestix](https://github.com/team-zestix)
-🎥 **Demo Video:** [YouTube Link]
+💻 **GitHub:** [https://github.com/KLC0317/Kitahack2026-Main](https://github.com/KLC0317/Kitahack2026-Main)
+
 
 ---
 
 ### **Built by Team Zestix for a Safer Tomorrow** 🌍✨
 
-<img src="https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge" alt="Made with Love">
+<img src="https://img.shields.io/badge/Made%20with-💜-pink?style=for-the-badge" alt="Made with Love">
 <img src="https://img.shields.io/badge/Powered%20by-Google%20AI-4285F4?style=for-the-badge&logo=google" alt="Powered by Google AI">
 <img src="https://img.shields.io/badge/Built%20with-Flutter-02569B?style=for-the-badge&logo=flutter" alt="Built with Flutter">
 <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase">

@@ -1,0 +1,59 @@
+name: safe_vision
+description: A school safety dashboard for real-time AI bullying alerts
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # UI
+  cupertino_icons: ^1.0.8
+  
+  # Firebase
+  firebase_core: ^2.32.0
+  cloud_firestore: ^4.17.5
+  firebase_messaging: ^14.7.9
+  
+  # Local Notifications
+  flutter_local_notifications: ^16.3.0
+
+  google_generative_ai: ^0.4.0
+  flutter_dotenv: ^5.1.0
+  flutter_markdown: ^0.6.18
+  rxdart: ^0.27.7 
+  
+  # PDF Generation
+  pdf: ^3.10.7
+  printing: ^5.11.1
+  
+  # UI Enhancement
+  google_fonts: ^6.1.0
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+  adaptive_icon_background: "#0A0E27"
+  adaptive_icon_foreground: "assets/images/logo.png"
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/logo.png
+    - assets/maps/
+    - assets/maps/FLOOR1.png
+    - assets/maps/FLOOR2.png
+    - assets/maps/FLOOR3.png
+    - .env
