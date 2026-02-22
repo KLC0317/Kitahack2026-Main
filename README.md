@@ -2,7 +2,7 @@
 
 <div align="center">
 
-## 🏆 Team Zestix
+## Team Zestix
 
 **Competition:** Kitahack | **Date:** February 2026
 
